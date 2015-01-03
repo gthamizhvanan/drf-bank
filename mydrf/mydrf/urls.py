@@ -11,5 +11,6 @@ router.register(r'account/d/[0-9]/',views.accountViewDebit)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^admin/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
