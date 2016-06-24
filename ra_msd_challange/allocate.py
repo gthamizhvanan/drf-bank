@@ -18,5 +18,3 @@ print ('INPUT - HOURS : 6, CPUS : 180, PRICE : 65')
 print ('-----------------------------------------')
 y = Common().get_costs(instances=instances, hours=6, cpus=180, price=65)
 pprint (y)
-
-
