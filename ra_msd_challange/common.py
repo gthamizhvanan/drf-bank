@@ -15,7 +15,7 @@ class Common():
                 cpu_result = self.getAllocate(cpus,single_instance_list,'cpu')
                 allocate_cpu_dict = {self.server_types_flip[k]:v for k,v in cpu_result.items()}
                 total_cost = "{0:.2f}".format(self.getPriceByCpu(cpu_result,hours,instances[single_instance]))
-                tuple_value_servers = list(tuple(self.dict_flip(allocate_cpu_dict).items()))
+                tuple_value_servers = [(v,k) for k,v in allocate_cpu_dict.items()]
                 result.append({'region':region, "total_cost": "$"+total_cost, "servers": tuple_value_servers})
 
             elif hours!=0 and cpus!=0 and price=='':
