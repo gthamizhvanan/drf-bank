@@ -1,5 +1,6 @@
 import math
 from copy import copy
+from pprint import pprint
 
 class Common():
     def __init__(self,params={}):
@@ -11,12 +12,24 @@ class Common():
         for single_instance in instances:
             region = single_instance
             if hours!=0 and cpus!=0 and price!='':
-                single_instance_list = self.getServerCpuList(instances[single_instance])
-                cpu_result = self.getAllocate(cpus,single_instance_list,'cpu')
+                avail_server_values_list = list(instances[single_instance].values())
+                avail_server_values_list.sort()
+                avail_server_values_list = avail_server_values_list[::-1]
+                price_result = self.getAllocate(price/hours,avail_server_values_list,'price')
+                price_result_round = {k:v for k,v in price_result.items()}
+                price_final_result = {k:round(price_result_round[v]*hours) for k,v in self.getCpu(price_result,instances[single_instance]).items()}
+
+                cpus_list = []
+                for x in list(price_final_result.keys()):
+                    cpus_list.append(self.server_types[x])
+
+                cpus_list.sort()
+                cpus_list = cpus_list[::-1]
+                cpu_result = self.getAllocate(cpus,cpus_list,'cpu')
                 allocate_cpu_dict = {self.server_types_flip[k]:v for k,v in cpu_result.items()}
-                total_cost = "{0:.2f}".format(self.getPriceByCpu(cpu_result,hours,instances[single_instance]))
                 tuple_value_servers = [(v,k) for k,v in allocate_cpu_dict.items()]
-                result.append({'region':region, "total_cost": "$"+total_cost, "servers": tuple_value_servers})
+                total_cost = "{0:.2f}".format(sum([k*v for k,v in price_result_round.items()])*hours)
+                result.append({'region':region, "total_cost": "$"+str(total_cost), "servers": tuple_value_servers})
 
             elif hours!=0 and cpus!=0 and price=='':
                 single_instance_list = self.getServerCpuList(instances[single_instance])
@@ -34,7 +47,7 @@ class Common():
                 price_result_round = {k:v for k,v in price_result.items()}
                 price_final_result = {k:round(price_result_round[v]*hours) for k,v in self.getCpu(price_result,instances[single_instance]).items()}
                 tuple_value_servers = [(v,k) for k,v in price_final_result.items()]
-                total_cost = sum([k*v for k,v in price_result_round.items()])*hours
+                total_cost = "{0:.2f}".format(sum([k*v for k,v in price_result_round.items()])*hours)
                 result.append({'region':region, "total_cost": "$"+str(total_cost), "servers": tuple_value_servers})
         return result
 
