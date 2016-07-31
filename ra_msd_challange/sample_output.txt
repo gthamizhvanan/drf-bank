@@ -1,0 +1,31 @@
+(py3)admin@admin-To:~/projects$ python allocate.py
+
+
+INPUT - HOURS : 24, CPUS : 135
+------------------------------
+[{'region': 'us-east',
+  'servers': [(1, 'xlarge'), (1, 'large'), (8, '8xlarge'), (1, '2xlarge')],
+  'total_cost': '$288.00'},
+ {'region': 'us-west',
+  'servers': [(4, '10xlarge'), (3, 'large'), (1, '2xlarge')],
+  'total_cost': '$305.11'}]
+
+
+INPUT - HOURS : 10, PRICE : 65
+------------------------------
+[{'region': 'us-east',
+  'servers': [(10, '4xlarge'), (10, 'large'), (40, '8xlarge')],
+  'total_cost': '$64.95'},
+ {'region': 'us-west',
+  'servers': [(20, '10xlarge'), (10, '2xlarge'), (10, 'large')],
+  'total_cost': '$64.94'}]
+
+
+INPUT - HOURS : 6, CPUS : 180, PRICE : 65
+-----------------------------------------
+[{'region': 'us-east',
+  'servers': [(2, 'xlarge'), (11, '8xlarge')],
+  'total_cost': '$64.85'},
+ {'region': 'us-west',
+  'servers': [(5, '10xlarge'), (1, '2xlarge'), (1, '8xlarge')],
+  'total_cost': '$64.64'}]
